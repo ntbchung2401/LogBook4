@@ -30,9 +30,8 @@ public class MainActivity extends AppCompatActivity implements RequestPermission
     private static final int CAMERA_REQUEST_CODE = 102;
     ImageView selectedImage;
     ImageView imageView;
-    Button camera_btn,backward_image_btn,forward_image_btn, save_to_gallery_button;
+    Button openCam,backward_btn,forward_btn, save_image;
     private static final int REQUEST_CODE = 1;
-    int i = 0;
     private int [] textureArrayWin = {};
 
 
@@ -42,59 +41,33 @@ public class MainActivity extends AppCompatActivity implements RequestPermission
         setContentView(R.layout.activity_main);
         imageView = findViewById(R.id.image_view);
         selectedImage = findViewById(R.id.image_view);
-        backward_image_btn = findViewById(R.id.backward_image_btn);
-        forward_image_btn = findViewById(R.id.forward_image_btn);
-        save_to_gallery_button = findViewById(R.id.save_to_gallery_button);
-        if(i == 0){
-            backward_image_btn.setVisibility(View.GONE);
-        }
-        if(i == 1){
-            forward_image_btn.setVisibility(View.GONE);
-        }
-        backward_image_btn.setOnClickListener(new View.OnClickListener() {
+
+
+        backward_btn = findViewById(R.id.backward_btn);
+        backward_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageView.setImageResource(textureArrayWin[i]);
-                i--;
-                if(i == 0){
-                    backward_image_btn.setVisibility(View.GONE);
-                }else {
-                    backward_image_btn.setVisibility(View.VISIBLE);
-                }
-                if (i == 2){
-                    forward_image_btn.setVisibility(View.GONE);
-                }else {
-                    forward_image_btn.setVisibility(View.VISIBLE);
-                }
+                Toast.makeText(MainActivity.this,"No images in gallery", Toast.LENGTH_SHORT).show();
             }
         });
-        forward_image_btn.setOnClickListener(new View.OnClickListener() {
+        forward_btn = findViewById(R.id.forward_btn);
+        forward_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageView.setImageResource(textureArrayWin[i]);
-                i++;
-                if(i == 0){
-                    backward_image_btn.setVisibility(View.GONE);
-                }else {
-                    backward_image_btn.setVisibility(View.VISIBLE);
-                }
-                if (i == 1){
-                    forward_image_btn.setVisibility(View.GONE);
-                }else {
-                    forward_image_btn.setVisibility(View.VISIBLE);
-                }
+                Toast.makeText(MainActivity.this,"No images in gallery", Toast.LENGTH_SHORT).show();
             }
         });
-        camera_btn = findViewById(R.id.camera_btn);
-        camera_btn.setOnClickListener(new View.OnClickListener() {
+        openCam = findViewById(R.id.openCam);
+        openCam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* Toast.makeText(MainActivity.this,"Camera Btn is Clicked!", Toast.LENGTH_SHORT).show();*/
+                 Toast.makeText(MainActivity.this,"Open the Camera", Toast.LENGTH_SHORT).show();
                 askCameraPermission();
             }
 
         });
-        save_to_gallery_button.setOnClickListener(new View.OnClickListener() {
+        save_image = findViewById(R.id.save_image);
+        save_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
@@ -107,6 +80,21 @@ public class MainActivity extends AppCompatActivity implements RequestPermission
                 }
             }
         });
+    }
+    private void openCamera(){
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(camera, CAMERA_REQUEST_CODE);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERM_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera();
+            } else {
+                Toast.makeText(this, "Allow to use the Camera?", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     private void askCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -121,20 +109,14 @@ public class MainActivity extends AppCompatActivity implements RequestPermission
             if(grandResults.length > 0 && grandResults[0] == PackageManager.PERMISSION_GRANTED){
                 saveImage();
             }else {
-                Toast.makeText(MainActivity.this, "Please provide required permission",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Enable permission please!",Toast.LENGTH_SHORT).show();
             }
         }
         super.onRequestPermissionsResult(requestCode, permission, grandResults);
     }
-
-
-
-
-
     private void saveImage(){
         Uri images;
         ContentResolver contentResolver = getContentResolver();
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
             images = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
         }else {
@@ -150,28 +132,13 @@ public class MainActivity extends AppCompatActivity implements RequestPermission
             OutputStream outputStream = contentResolver.openOutputStream(Objects.requireNonNull(uri));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             Objects.requireNonNull(outputStream);
-            Toast.makeText(MainActivity.this, "Image Save To Gallery Successfully!!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Successfully adding Image",Toast.LENGTH_SHORT).show();
         }catch (Exception e){
-            Toast.makeText(MainActivity.this, "Image Not Saved!!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Fail to add Image",Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CAMERA_PERM_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera();
-            } else {
-                Toast.makeText(this, "Camera Permission is Required to Use Camera!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    private void openCamera(){
-        /* Toast.makeText(this, "Camera Open Request",Toast.LENGTH_SHORT).show();*/
-        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(camera, CAMERA_REQUEST_CODE);
-    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -8,90 +8,71 @@
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="251dp"
-        android:layout_height="255dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/border"
         android:layout_marginEnd="16dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/image_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.554"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/backward_image_btn"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="16dp"
-        android:text="Backward"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view" />
-
-    <Button
-        android:id="@+id/forward_image_btn"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="16dp"
-        android:text="Forward"
-        app:layout_constraintStart_toEndOf="@+id/backward_image_btn"
-        app:layout_constraintTop_toBottomOf="@+id/image_view" />
-
-    <TextView
-        android:id="@+id/url_text"
+        android:id="@+id/backward_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="20dp"
-        android:text="URL:"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        android:drawableLeft="@drawable/backward"
+        android:text="Backward"
+        app:layout_constraintBottom_toTopOf="@+id/openCam"
+        app:layout_constraintEnd_toStartOf="@+id/forward_btn"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backward_image_btn" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="297dp"
-        android:layout_height="43dp"
-        android:layout_marginHorizontal="26dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="56dp"
-        android:hint="Enter Image URL"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/url_text" />
+        app:layout_constraintTop_toBottomOf="@+id/image_view"
+        app:layout_constraintVertical_bias="0.333" />
 
     <Button
-        android:id="@+id/addlink_btn"
+        android:id="@+id/forward_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="20dp"
+        android:drawableRight="@drawable/forward"
+        android:text="Forward"
+        app:layout_constraintBottom_toTopOf="@+id/openCam"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <Button
+        android:id="@+id/openCam"
         android:layout_width="295dp"
         android:layout_height="48dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="16dp"
-        android:text="Add URL to Database"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="80dp"
+        android:text="@string/openCam"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/image_view"
+        tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/camera_btn"
-        android:layout_width="295dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="16dp"
-        android:text="Launch The Camera"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addlink_btn" />
-
-    <Button
-        android:id="@+id/save_to_gallery_button"
+        android:id="@+id/save_image"
         android:layout_width="291dp"
-        android:layout_height="47dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:text="Save to Gallery"
+        android:layout_marginBottom="80dp"
+        android:text="@string/saveGal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/camera_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/openCam"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

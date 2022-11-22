@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">LogBook4</string>
+    <string name="openCam">Open the Camera</string>
+    <string name="saveGal">Save to Gallery</string>
+
 </resources>
